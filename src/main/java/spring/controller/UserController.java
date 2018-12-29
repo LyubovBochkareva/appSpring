@@ -16,13 +16,14 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
+@RequestMapping(value="/")
 public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
 
 
-    @RequestMapping(value = "/users")
+    @RequestMapping(value = "/")
     public ModelAndView getAllUsers(ModelAndView model) throws IOException {
         List<User> userList = userServiceImpl.getAllUser();
         model.addObject("listUsers", userList);
@@ -44,7 +45,7 @@ public class UserController {
     public ModelAndView deleteUser(HttpServletRequest request) {
         Long userId = Long.valueOf(request.getParameter("id"));
         userServiceImpl.deleteUser(userId);
-        return new ModelAndView("redirect:/users");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.GET)
@@ -63,7 +64,7 @@ public class UserController {
         } else {
             userServiceImpl.updateUser(user);
         }
-        return new ModelAndView("redirect:/users");
+        return new ModelAndView("redirect:/");
     }
 
 }

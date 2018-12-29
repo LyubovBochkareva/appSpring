@@ -12,12 +12,13 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
 
-    public void setUserDao(UserDao userDao) {
+    @Autowired
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
+
 
     @Override
     public User getUserById(Long id) {
