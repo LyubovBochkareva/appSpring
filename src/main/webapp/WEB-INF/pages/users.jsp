@@ -12,7 +12,7 @@
     <div align="center">
     <h1>User List</h1>
     <h3>
-        <a href="${addUser}">New User</a>
+        <a href="addUser">New User</a>
     </h3>
         <table border="1">
             <th>Login</th>
@@ -29,7 +29,7 @@
             <td>${user.age}</td>
             <td>${user.role}</td>
             <td>
-                <spring:url value=""<a href="${editUser?id=${user.id}">Edit</a>
+                <a href="editUser?id=${user.id}">Edit</a>
                 <a href="deleteUser?id=${user.id}">Delete</a></td>
         </tr>
         </c:forEach>

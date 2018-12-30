@@ -1,30 +1,23 @@
 package spring.dao;
 
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
-import spring.model.User;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import spring.model.User;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
-
-
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
+    public UserDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
 
     @Override
     public User getUserById(Long id) {
@@ -61,6 +54,9 @@ public class UserDaoImpl implements UserDao {
 
     public void addUser(User user) {
         sessionFactory.getCurrentSession().saveOrUpdate(user);
+    }
 
+    public void saveOrUpdate(User user) {
+        sessionFactory.getCurrentSession().saveOrUpdate(user);
     }
 }
