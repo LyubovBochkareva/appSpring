@@ -16,26 +16,32 @@
             <form:hidden path="id"/>
             <tr>
                 <td>Login:</td>
-                <td><form:input path="login" /></td>
+                <td><form:input type ="text" path="login" /></td>
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><form:input path="password" /></td>
+                <td><form:input type ="password" path="password" /></td>
             </tr>
             <tr>
                 <td>Name</td>
-                <td><form:input path="name" /></td>
+                <td><form:input type ="text" path="name" /></td>
             </tr>
             <tr>
                 <td>Age:</td>
-                <td><form:input path="age" /></td>
+                <td><form:input type ="number" path="age" /></td>
             </tr>
             <td>Role</td>
-            <td><form:input path="role" /></td>
+            <td>
+                <p><select size="1" name="role">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select></p>
+            </td>
             </tr>
             <tr>
                 <td colspan="2" align="center"><input type="submit" value="Save"></td>
             </tr>
+            </form>
         </table>
     </form:form>
 </div>
