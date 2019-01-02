@@ -1,27 +1,25 @@
 package spring.dao;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import spring.model.User;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    private final SessionFactory sessionFactory;
+    @PersistenceContext
+    EntityManager entityManager;
 
-    @Autowired
-    public UserDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-
+    @Transactional
     @Override
     public User getUserById(Long id) {
-        return sessionFactory.getCurrentSession().get(User.class, id);
+        return entityManager.find(User.class, id);
     }
 
     @Override
@@ -31,32 +29,34 @@ public class UserDaoImpl implements UserDao {
 
 
     @SuppressWarnings("unchecked")
+    @Transactional
     @Override
     public List<User> getAllUser(){
-        return sessionFactory.getCurrentSession().createQuery("FROM User").list();
+            Query query = entityManager.createQuery("FROM User");
+            List<User> userList = query.getResultList();
+            return userList;
     }
 
 
     @Override
     public User updateUser(User user) {
-        sessionFactory.getCurrentSession().update(user);
+        entityManager.merge(user);
         return user;
     }
 
     @Override
     public void deleteUser(Long id) {
-        User user = sessionFactory.getCurrentSession().load(
-                User.class, id);
-        if (null != user) {
-            this.sessionFactory.getCurrentSession().delete(user);
-        }
+      User user = (User) entityManager.createQuery("FROM User WHERE id =:userId")
+              .setParameter("userId", id)
+              .getSingleResult();
+      entityManager.remove(user);
     }
 
     public void addUser(User user) {
-        sessionFactory.getCurrentSession().saveOrUpdate(user);
+        entityManager.persist(user);
     }
 
     public void saveOrUpdate(User user) {
-        sessionFactory.getCurrentSession().saveOrUpdate(user);
+        entityManager.merge(user);
     }
 }
